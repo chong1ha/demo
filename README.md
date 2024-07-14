@@ -1,4 +1,4 @@
-# OCR-java Sample Project
+# Demo
 
 ## Getting Started
 
