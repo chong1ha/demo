@@ -17,7 +17,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    
     steps:
     - name: Check out repository
       uses: actions/checkout@v4
@@ -45,11 +45,11 @@ jobs:
         pwd
         echo "Files in the current directory:"
         ls -al
-        echo "Files 1"
-        ls -al ./week1/
+        echo "cd"
+        cd ./week1/C:/apps/demo/week1/
 
     - name: Build Docker Image
-      run: docker build -t my-app-week1:latest -f week1/src/main/docker/Dockerfile .
+      run: docker build -t my-app-week1:latest .
 
     - name: Log in to Docker Hub
       uses: docker/login-action@v2
