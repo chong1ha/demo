@@ -27,6 +27,7 @@ public class Application implements CommandLineRunner {
     private volatile String className;
     /** yaml 경로 */
     private static final String YAML_FILE_PATH = "application.yaml";
+    private static final String EXT_YAML_FILE_PATH = "/Users/kang-geonha/Workspace/study/demo/week1/src/main/ext/demo/start.yaml";
 
     /**
      * Framework : SpringBoot 3.3.1 (Spring 6.x) <br>
