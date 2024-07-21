@@ -47,6 +47,10 @@ jobs:
         ls -al
         echo "cd"
         cd ./week1/C:/apps/demo/week1/
+        echo "Current directory:"
+        pwd
+        echo "Files in the current directory:"
+        ls -al
 
     - name: Build Docker Image
       run: docker build -t my-app-week1:latest .
