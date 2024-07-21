@@ -1,0 +1,52 @@
+# .github/workflows/docker-build-week1.yml
+name: Build and Deploy Docker Image for Week1
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'week1/**'
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'week1/**'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'adopt'
+        java-version: '17'
+        
+    - name: Cache Maven packages
+      uses: actions/cache@v4
+      with:
+        path: ~/.m2/repository
+        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+        restore-keys: |
+          ${{ runner.os }}-maven-
+
+    - name: Build Maven Project
+      run: mvn -B clean install -f week1/pom.xml
+
+    - name: Build Docker Image
+      run: docker build -t my-app-week1:latest -f week1/src/main/docker/Dockerfile .
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Push Docker Image
+      run: docker push my-app-week1:latest

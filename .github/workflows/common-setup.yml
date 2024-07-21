@@ -1,0 +1,13 @@
+# .github/workflows/common-setup.yml
+name: Common Setup
+
+on: [workflow_call]
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+    - name: List files 
+      run: ls -al
+    - name: Print working directory
+      run: pwd
