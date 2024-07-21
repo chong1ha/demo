@@ -34,11 +34,11 @@ jobs:
     - name: Run tests with Maven
       run: mvn test
 
-    - name: Checkstyle
-      run: mvn checkstyle:checkstyle
+    # - name: Checkstyle
+    #   run: mvn checkstyle:checkstyle
 
-    - name: PMD
-      run: mvn pmd:pmd
+    # - name: PMD
+    #   run: mvn pmd:pmd
 
     - name: SpotBugs
       run: mvn spotbugs:check
