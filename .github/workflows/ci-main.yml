@@ -16,7 +16,7 @@ jobs:
     needs: setup
     steps:
     - name: Check out repository
-      run: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: Build with Maven
       run: mvn -B clean install
 
@@ -25,7 +25,7 @@ jobs:
     needs: build
     steps:
     - name: Check out repository
-      run: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: Run tests with Maven
       run: mvn test
 
@@ -34,6 +34,6 @@ jobs:
     needs: build
     steps:
     - name: Check out repository
-      run: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: SpotBugs
       run: mvn spotbugs:check
