@@ -1,4 +1,4 @@
 # pure java - Class Loading
 
 week1:
-    class: com.example.week1.DemoRunner
+    class: com.example.week1.Test01.DemoRunner

@@ -1,14 +1,8 @@
 package com.example.week1;
 
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.yaml.snakeyaml.Yaml;
-
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Map;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * @author gunha
@@ -16,6 +10,7 @@ import java.util.Map;
  * @since 2024-07-04 오후 1:26
  */
 @SpringBootApplication
+@EnableScheduling
 public class Application {
 
     /**
