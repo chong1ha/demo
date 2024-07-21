@@ -1,4 +1,4 @@
-name: Build and Deploy Docker Image for Week1
+name: Build and Deploy Docker Image, Trivy for Week1
 
 on:
   push:
@@ -56,7 +56,7 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y gnupg curl
-        curl -fsSL https://raw.githubusercontent.com/aquasecurity/trivy/master/contrib/scripts/install_trivy.sh | sudo sh
+        curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin v0.18.3
 
     - name: Scan Docker Image with Trivy
-      run: trivy image --no-progress gunnha/my-app-week1:latest
+      run: trivy image gunnha/my-app-week1:latest
