@@ -43,6 +43,7 @@
 		<java.version>17</java.version>
 
 		<!-- 의존성 라이브러리 버전 별도 관리 -->
+		<checkstyle.v>10.17.0</checkstyle.v>
 	</properties>
 
 	<!-- Add typical dependencies for a web application -->
@@ -83,6 +84,27 @@
 						</exclude>
 					</excludes>
 				</configuration>
+			</plugin>
+
+			<!-- Checkstyle Plugin -->
+			<!-- PMD Plugin -->
+			<!-- SpotBugs Plugin -->
+			<plugin>
+				<groupId>com.github.spotbugs</groupId>
+				<artifactId>spotbugs-maven-plugin</artifactId>
+				<version>4.8.6.2</version>
+				<configuration>
+					<effort>Max</effort> <!-- Set effort level -->
+					<threshold>Low</threshold> <!-- Set threshold level -->
+				</configuration>
+				<executions>
+					<execution>
+						<phase>verify</phase>
+						<goals>
+							<goal>spotbugs</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
