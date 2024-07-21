@@ -1,0 +1,47 @@
+# .github/workflows/main.yml
+name: Java CI with Maven
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  setup:
+    uses: ./.github/workflows/common-setup.yml
+
+  build:
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+    - name: Build with Maven
+      run: mvn -B clean install
+
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - name: Run tests with Maven
+      run: mvn test
+
+  checkstyle:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - name: Checkstyle
+      run: mvn checkstyle:checkstyle
+
+  pmd:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - name: PMD
+      run: mvn pmd:pmd
+
+  spotbugs:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - name: SpotBugs
+      run: mvn spotbugs:check
