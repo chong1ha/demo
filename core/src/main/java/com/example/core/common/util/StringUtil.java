@@ -1,4 +1,4 @@
-package com.example.core.util;
+package com.example.core.common.util;
 
 import java.util.Optional;
 
