@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.week1.dummy.database.DummyDomainMapper">
+
+    <resultMap id="DummyDomainResultMap" type="DummyDomain">
+        <id property="id" column="id" />
+        <result property="hostId" column="host_id" />
+        <result property="dockerId" column="docker_id" />
+    </resultMap>
+
+    <!-- SQL query to select all-->
+    <select id="selectAll" resultMap="DummyDomainResultMap">
+        SELECT id, host_id, docker_id
+        FROM dummy_domain
+    </select>
+</mapper>

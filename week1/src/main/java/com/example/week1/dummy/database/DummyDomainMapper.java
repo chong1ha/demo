@@ -1,7 +1,10 @@
-package com.example.week1.database.dummy;
+package com.example.week1.dummy.database;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author gunha
@@ -10,5 +13,7 @@ import org.springframework.stereotype.Repository;
  */
 @Mapper
 @Repository
-public interface DummyMapper {
+public interface DummyDomainMapper {
+
+    List<Map<String, Object>> selectAll() throws Exception;
 }

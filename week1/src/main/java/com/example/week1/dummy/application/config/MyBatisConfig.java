@@ -23,7 +23,7 @@ import javax.sql.DataSource;
  * @since 2024/07/22 12:08 AM
  */
 @Configuration
-@MapperScan(basePackages = "com.example.week1.database")
+@MapperScan(basePackages = "com.example.week1.dummy.database")
 @EnableTransactionManagement
 @EnableConfigurationProperties(MyBatisProperties.class)
 public class MyBatisConfig {
