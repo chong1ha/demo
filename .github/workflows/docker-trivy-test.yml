@@ -1,4 +1,4 @@
-name: Build and Deploy Docker Image, Trivy for Week1
+name: Java App Docker Build and Image Scan
 
 on:
   push:
