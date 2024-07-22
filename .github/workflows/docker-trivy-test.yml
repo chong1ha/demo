@@ -43,6 +43,15 @@ jobs:
         cd ./week1/C:/apps/demo/week1/
         docker build -t gunnha/my-app-week1:latest .
 
+    - name: Install Trivy
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y gnupg curl
+        curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin v0.18.3
+
+    - name: Scan Docker Image with Trivy
+      run: trivy image gunnha/my-app-week1:latest
+
     - name: Log in to Docker Hub
       uses: docker/login-action@v2
       with:
@@ -52,11 +61,3 @@ jobs:
     - name: Push Docker Image
       run: docker push gunnha/my-app-week1:latest
 
-    - name: Install Trivy
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y gnupg curl
-        curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin v0.18.3
-
-    - name: Scan Docker Image with Trivy
-      run: trivy image gunnha/my-app-week1:latest
