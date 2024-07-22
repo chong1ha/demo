@@ -1,4 +1,4 @@
-package com.example.week1.dummy.application.config;
+package com.example.week1.database.config;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -23,7 +23,10 @@ import javax.sql.DataSource;
  * @since 2024/07/22 12:08 AM
  */
 @Configuration
-@MapperScan(basePackages = "com.example.week1.dummy.database")
+@MapperScan(basePackages = {
+        "com.example.week1.database.common.mapper",
+        "com.example.week1.database.dummy.mapper"
+})
 @EnableTransactionManagement
 @EnableConfigurationProperties(MyBatisProperties.class)
 public class MyBatisConfig {

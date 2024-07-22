@@ -1,4 +1,4 @@
-package com.example.week1.dummy.application.config;
+package com.example.week1.database.config;
 
 import lombok.Getter;
 import lombok.Setter;

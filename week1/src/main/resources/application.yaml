@@ -1,7 +1,12 @@
 # pure java - Class Loading
-
 week1:
     class: com.example.week1.test01.YamlRunner
+
+# Spring Configuration
+server:
+    port: ${API_PORT:8082}
+    devtools:
+        add-properties: false
 
 # PostgreSQL Configuration
 spring:
@@ -14,4 +19,15 @@ spring:
 # MyBatis
 mybatis:
     mapper-locations: classpath:mapper/*.xml
-    type-aliases-package: com.example.week1.dummy.domain.model
+    type-aliases-package: com.example.week1.database.common.model, com.example.week1.database.dummy.model
+
+# Scheduler
+scheduler:
+    fixedRate: 20000
+    poolSize: 10
+    threadNamePrefix: ScheduledTask-
+executor:
+    corePoolSize: 5
+    maxPoolSize: 10
+    queueCapacity: 50
+    threadNamePrefix: ThreadPoolExecutor-

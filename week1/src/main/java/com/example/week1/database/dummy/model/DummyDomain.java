@@ -1,9 +1,11 @@
-package com.example.week1.dummy.domain.model;
+package com.example.week1.database.dummy.model;
 
 import lombok.Builder;
 import lombok.Getter;
 
 /**
+ * DummyDomain Model
+ *
  * @author kang-geonha
  * @version 1.0
  * @since 2024/07/21 11:41 PM
