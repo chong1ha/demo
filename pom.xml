@@ -44,6 +44,8 @@
 
 		<!-- 의존성 라이브러리 버전 별도 관리 -->
 		<checkstyle.v>10.17.0</checkstyle.v>
+		<psql.v>42.7.3</psql.v>
+		<mybatis-spring-boot.v>3.0.3</mybatis-spring-boot.v>
 	</properties>
 
 	<!-- Add typical dependencies for a web application -->
@@ -63,6 +65,19 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+
+		<!--  PostgreSQL  -->
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>${psql.v}</version>
+		</dependency>
+		<!-- Mybatis -->
+		<dependency>
+			<groupId>org.mybatis.spring.boot</groupId>
+			<artifactId>mybatis-spring-boot-starter</artifactId>
+			<version>${mybatis-spring-boot.v}</version>
 		</dependency>
 	</dependencies>
 
