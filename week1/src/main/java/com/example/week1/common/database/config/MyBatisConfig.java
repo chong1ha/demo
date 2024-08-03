@@ -1,4 +1,4 @@
-package com.example.week1.database.config;
+package com.example.week1.common.database.config;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -24,23 +24,12 @@ import javax.sql.DataSource;
  */
 @Configuration
 @MapperScan(basePackages = {
-        "com.example.week1.database.common.mapper",
-        "com.example.week1.database.dummy.mapper"
+        "com.example.week1.common.database.mapper",
+        "com.example.week1.dummy.database.mapper"
 })
 @EnableTransactionManagement
 @EnableConfigurationProperties(MyBatisProperties.class)
 public class MyBatisConfig {
-
-    /**
-     * MyBatis의 프로퍼티를 외부 설정 파일에서 읽어옴
-     *
-     * @return MyBatisProperties
-     */
-    @Bean
-    @ConfigurationProperties(prefix = "mybatis")
-    public MyBatisProperties myBatisProperties() {
-        return new MyBatisProperties();
-    }
 
     /**
      * SqlSessionFactory 생성

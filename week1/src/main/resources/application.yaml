@@ -1,6 +1,6 @@
 # pure java - Class Loading
 week1:
-    class: com.example.week1.test01.YamlRunner
+    class: com.example.week1.test03.YamlRunner
 
 # Spring Configuration
 server:
@@ -19,12 +19,12 @@ spring:
 # MyBatis
 mybatis:
     mapper-locations: classpath:mapper/*.xml
-    type-aliases-package: com.example.week1.database.common.model, com.example.week1.database.dummy.model
+    type-aliases-package: com.example.week1.common.database.model, com.example.week1.dummy.database.model
 
 # Scheduler
 scheduler:
-    fixedRate: 20000
-    poolSize: 10
+    fixedRate: 5000
+    poolSize: 5
     threadNamePrefix: ScheduledTask-
 executor:
     corePoolSize: 5

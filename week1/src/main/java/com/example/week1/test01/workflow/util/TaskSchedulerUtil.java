@@ -1,4 +1,4 @@
-package com.example.week1.scheduler;
+package com.example.week1.test01.workflow.util;
 
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
@@ -11,7 +11,7 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 스케줄링 작업을 수행하는 유틸리티 클래스 <br>
+ * 스케줄링 작업을 수행하는 유틸리티 클래스
  *
  * @author kang-geonha
  * @version 1.0

@@ -1,4 +1,4 @@
-package com.example.week1.test01;
+package com.example.week1.test03;
 
 /**
  * 테스트: 순수 자바환경에서의 동적 클래스 로딩

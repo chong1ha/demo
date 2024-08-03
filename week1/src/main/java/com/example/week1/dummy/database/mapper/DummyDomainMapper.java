@@ -1,6 +1,6 @@
-package com.example.week1.database.dummy.mapper;
+package com.example.week1.dummy.database.mapper;
 
-import com.example.week1.database.dummy.model.DummyDomain;
+import com.example.week1.dummy.database.model.DummyDomain;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -17,6 +17,6 @@ import java.util.List;
 @Repository
 public interface DummyDomainMapper {
 
-    /** Select All */
+    /** 모든 DummyDomain 정보 조회 */
     List<DummyDomain> selectAll() throws Exception;
 }

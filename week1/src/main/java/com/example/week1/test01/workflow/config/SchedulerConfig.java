@@ -1,4 +1,4 @@
-package com.example.week1.scheduler.config;
+package com.example.week1.test01.workflow.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

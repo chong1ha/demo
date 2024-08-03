@@ -1,16 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.week1.database.dummy.mapper.DummyDomainMapper">
+<mapper namespace="com.example.week1.dummy.database.mapper.DummyDomainMapper">
 
     <resultMap id="DummyDomainResultMap" type="DummyDomain">
-    <id property="id" column="id" />
-    <result property="hostId" column="host_id" />
-    <result property="dockerId" column="docker_id" />
-</resultMap>
+        <id property="dummyId" column="dummy_id"/>
+        <result property="dummyName" column="dummy_name"/>
+        <result property="dummyDesc" column="dummy_desc"/>
+        <result property="dummyServiceYn" column="dummy_service_yn"/>
+        <result property="dummyCreateDt" column="created_at"/>
+        <result property="dummyModifyDt" column="updated_at"/>
+    </resultMap>
 
     <!-- SQL query to select all-->
     <select id="selectAll" resultMap="DummyDomainResultMap">
-        SELECT id, host_id, docker_id
-        FROM public.dummy_domain
+        select
+        dummy_id
+        , dummy_name
+        , dummy_desc
+        , dummy_service_yn
+        , created_at
+        , updated_at
+        from
+        public.dummy_domain
     </select>
 </mapper>

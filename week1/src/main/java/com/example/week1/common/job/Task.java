@@ -1,6 +1,6 @@
-package com.example.week1.database.dummy.job;
+package com.example.week1.common.job;
 
-import com.example.week1.database.dummy.model.DummyDomain;
+import com.example.week1.dummy.database.model.DummyDomain;
 
 import java.util.List;
 import java.util.Map;
@@ -12,7 +12,7 @@ import java.util.Map;
  * @version 1.0
  * @since 2024-07-16 오후 3:21
  */
-public interface DummyTask {
+public interface Task {
 
     /**
      * 초기화 수행

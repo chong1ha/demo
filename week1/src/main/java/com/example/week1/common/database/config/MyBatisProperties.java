@@ -1,4 +1,4 @@
-package com.example.week1.database.config;
+package com.example.week1.common.database.config;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -15,8 +15,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @ConfigurationProperties(prefix = "mybatis")
-@Getter
-@Setter
+@Getter @Setter
 public class MyBatisProperties {
 
     /** MyBatis Mapper XML 파일의 경로 */

@@ -1,16 +1,17 @@
 package com.example.week1;
 
+import com.example.week1.test01.workflow.JobRunner01;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
+ * 스케줄러 테스트 1 (EnableScheduling) : {@link JobRunner01} <br>
+ *
  * @author gunha
  * @version 1.0
  * @since 2024-07-04 오후 1:26
  */
 @SpringBootApplication
-@EnableScheduling
 public class Application {
 
     /**

@@ -1,4 +1,4 @@
-package com.example.week1.scheduler;
+package com.example.week1.test01.workflow.util;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
