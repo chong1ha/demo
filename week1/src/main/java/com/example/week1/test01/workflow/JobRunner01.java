@@ -32,7 +32,7 @@ import java.util.concurrent.TimeUnit;
  * @version 1.0
  * @since 2024/07/21 11:40 PM
  */
-//@Component
+@Component
 public class JobRunner01 {
 
     /** 주기적으로 실행되는 작업 관리 */

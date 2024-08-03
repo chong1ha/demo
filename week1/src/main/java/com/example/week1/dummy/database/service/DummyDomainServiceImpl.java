@@ -25,7 +25,7 @@ public class DummyDomainServiceImpl implements DummyDomainService {
     public DummyDomainServiceImpl(DummyDomainMapper dummyDomainMapper) {
         this.dummyDomainMapper = dummyDomainMapper;
     }
-    
+
 
     /**
      * 모든 DummyDomain 객체 조회

@@ -12,8 +12,6 @@ import org.springframework.stereotype.Component;
  * @version 1.0
  * @since 2024-07-22 오전 10:35
  */
-
-@Component
 @ConfigurationProperties(prefix = "mybatis")
 @Getter @Setter
 public class MyBatisProperties {

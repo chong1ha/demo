@@ -25,17 +25,19 @@ public class DummyDomain extends AuditInfo {
     /** Desc */
     private String dummyDesc;
     /** Service exec Y/N */
-    private char dummyServiceYn;
+    private Character dummyServiceYn;
 
 
     /**
      * DummyDomain의 Builder 클래스
      */
     @Builder
-    public DummyDomain(String dummyId, String dummyName, char dummyServiceYn,
+    public DummyDomain(String dummyId, String dummyName, String dummyDesc, Character dummyServiceYn,
                        OffsetDateTime dummyCreateDt, OffsetDateTime dummyModifyDt) {
         super(dummyCreateDt, dummyModifyDt);
         this.dummyId = dummyId;
         this.dummyName = dummyName;
+        this.dummyDesc = dummyDesc;
+        this.dummyServiceYn = dummyServiceYn;
     }
 }

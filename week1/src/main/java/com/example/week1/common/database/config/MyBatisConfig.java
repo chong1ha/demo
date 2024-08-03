@@ -1,5 +1,6 @@
 package com.example.week1.common.database.config;
 
+import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -29,18 +30,20 @@ import javax.sql.DataSource;
 })
 @EnableTransactionManagement
 @EnableConfigurationProperties(MyBatisProperties.class)
+@RequiredArgsConstructor
 public class MyBatisConfig {
+
+    private final DataSource dataSource;
+    private final MyBatisProperties myBatisProperties;
 
     /**
      * SqlSessionFactory 생성
      *
-     * @param dataSource 애플리케이션의 데이터 소스
-     * @param myBatisProperties MyBatis 설정을 담고 있는 프로퍼티 객체
      * @throws Exception SQL 세션 팩토리 생성 중 발생할 수 있는 예외
      * @return SqlSessionFactory
      */
     @Bean
-    public SqlSessionFactory sqlSessionFactory(DataSource dataSource, MyBatisProperties myBatisProperties) throws Exception {
+    public SqlSessionFactory sqlSessionFactory() throws Exception {
         SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
         sessionFactory.setDataSource(dataSource);
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
