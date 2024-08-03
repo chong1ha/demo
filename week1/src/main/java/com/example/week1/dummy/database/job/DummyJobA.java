@@ -1,7 +1,7 @@
 package com.example.week1.dummy.database.job;
 
 import com.example.core.common.util.CommonUtil;
-import com.example.week1.common.job.Task;
+import com.example.week1.common.job.AbstractTask;
 import com.example.week1.dummy.database.model.DummyDomain;
 import org.springframework.stereotype.Component;
 
@@ -16,16 +16,11 @@ import java.util.Map;
  * @since 2024/07/23 12:15 AM
  */
 @Component
-public class DummyJobA implements Task {
+public class DummyJobA extends AbstractTask {
 
     @Override
     public void init() throws Exception {
         System.out.println("DummyJob A: init()");
-    }
-
-    @Override
-    public void exit() throws Exception {
-        System.out.println("DummyJob A: exit()");
     }
 
     @Override

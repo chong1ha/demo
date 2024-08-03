@@ -1,8 +1,8 @@
 package com.example.week1.test01.workflow;
 
+import com.example.week1.common.job.AbstractTask;
 import com.example.week1.dummy.database.job.DummyJobA;
 import com.example.week1.dummy.database.job.DummyJobB;
-import com.example.week1.common.job.Task;
 import com.example.week1.dummy.database.model.DummyDomain;
 import com.example.week1.dummy.database.service.DummyDomainServiceImpl;
 import com.example.week1.test01.workflow.util.TaskExecutorUtil;
@@ -39,16 +39,16 @@ public class JobRunner01 {
     private final TaskSchedulerUtil taskSchedulerUtil;
     private final TaskExecutorUtil taskExecutorUtil;
     private final DummyDomainServiceImpl domainService;
-    private final List<Task> tasks;
+    private final List<AbstractTask> tasks;
     private final long fixedRate;
     @Autowired
     public JobRunner01(TaskSchedulerUtil taskSchedulerUtil, TaskExecutorUtil taskExecutorUtil,
-                       DummyDomainServiceImpl domainService, List<Task> tasks,
+                       DummyDomainServiceImpl domainService, List<AbstractTask> tasks,
                        @Value("${scheduler.fixedRate}") long fixedRate) {
 
-        // 인스턴스 생성 (더미 용, 추후 yaml)
-        Task dummyJobA = new DummyJobA();
-        Task dummyJobB = new DummyJobB();
+        // 인스턴스 생성 (더미 테스트용, 추후 yaml)
+        AbstractTask dummyJobA = new DummyJobA();
+        AbstractTask dummyJobB = new DummyJobB();
 
         this.tasks = List.of(dummyJobA, dummyJobB);
         this.domainService = domainService;
@@ -82,7 +82,7 @@ public class JobRunner01 {
             // 각 도메인별
             for (DummyDomain domain : domains) {
                 // 업무별
-                for (Task task : tasks) {
+                for (AbstractTask task : tasks) {
                     taskExecutorUtil.submitTask(() -> {
                         try {
                             // 초기화
