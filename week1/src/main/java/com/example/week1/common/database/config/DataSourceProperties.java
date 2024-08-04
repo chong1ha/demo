@@ -3,7 +3,6 @@ package com.example.week1.common.database.config;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
 
 /**
  * DataSource 프로퍼티 클래스

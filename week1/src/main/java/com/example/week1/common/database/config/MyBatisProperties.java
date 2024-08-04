@@ -3,7 +3,6 @@ package com.example.week1.common.database.config;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
 
 /**
  * MyBatis 설정을 외부 설정 파일에서 읽어오는 프로퍼티 클래스
