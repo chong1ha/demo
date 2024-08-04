@@ -1,6 +1,6 @@
 package com.example.week1.dummy.database.service;
 
-import com.example.core.common.YamlPropertySourceFactory;
+import com.example.core.common.config.YamlPropertySourceFactory;
 import com.example.week1.common.database.config.DataSourceConfig;
 import com.example.week1.common.database.config.MyBatisConfig;
 import com.example.week1.dummy.database.model.DummyDomain;
@@ -55,7 +55,7 @@ class DummyDomainServiceImplTest {
      * 2. 모의 객체의 설정 (연습)
      */
     @BeforeEach
-    void setUp() throws Exception {
+    void setup() throws Exception {
 
         List<DummyDomain> expectedDomainList = List.of(
                 DummyDomain.builder()

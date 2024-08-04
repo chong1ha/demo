@@ -1,6 +1,6 @@
 package com.example.week1.common.database.config;
 
-import com.example.core.common.YamlPropertySourceFactory;
+import com.example.core.common.config.YamlPropertySourceFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

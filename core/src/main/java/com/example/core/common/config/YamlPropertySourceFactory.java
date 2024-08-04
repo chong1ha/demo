@@ -1,4 +1,4 @@
-package com.example.core.common;
+package com.example.core.common.config;
 
 import jakarta.annotation.Nullable;
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;

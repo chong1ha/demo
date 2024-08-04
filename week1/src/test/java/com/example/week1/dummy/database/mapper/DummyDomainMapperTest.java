@@ -1,6 +1,6 @@
 package com.example.week1.dummy.database.mapper;
 
-import com.example.core.common.YamlPropertySourceFactory;
+import com.example.core.common.config.YamlPropertySourceFactory;
 import com.example.week1.common.database.config.DataSourceConfig;
 import com.example.week1.common.database.config.MyBatisConfig;
 import com.example.week1.dummy.database.model.DummyDomain;
