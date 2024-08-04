@@ -33,25 +33,25 @@ import java.util.concurrent.TimeUnit;
  * @since 2024/07/21 11:40 PM
  */
 @Component
-public class JobRunner01 {
+public class JobScheduler01 {
 
     /** 주기적으로 실행되는 작업 관리 */
     private final TaskSchedulerUtil taskSchedulerUtil;
     private final TaskExecutorUtil taskExecutorUtil;
-    private final DummyDomainServiceImpl domainService;
+    private final DummyDomainServiceImpl dummyDomainService;
     private final List<AbstractTask> tasks;
     private final long fixedRate;
     @Autowired
-    public JobRunner01(TaskSchedulerUtil taskSchedulerUtil, TaskExecutorUtil taskExecutorUtil,
-                       DummyDomainServiceImpl domainService, List<AbstractTask> tasks,
-                       @Value("${scheduler.fixedRate}") long fixedRate) {
+    public JobScheduler01(TaskSchedulerUtil taskSchedulerUtil, TaskExecutorUtil taskExecutorUtil,
+                          DummyDomainServiceImpl dummyDomainService, List<AbstractTask> tasks,
+                          @Value("${scheduler.fixedRate}") long fixedRate) {
 
         // 인스턴스 생성 (더미 테스트용, 추후 yaml)
         AbstractTask dummyJobA = new DummyJobA();
         AbstractTask dummyJobB = new DummyJobB();
 
         this.tasks = List.of(dummyJobA, dummyJobB);
-        this.domainService = domainService;
+        this.dummyDomainService = dummyDomainService;
         this.taskSchedulerUtil = taskSchedulerUtil;
         this.taskExecutorUtil = taskExecutorUtil;
         this.fixedRate = fixedRate;
@@ -74,7 +74,7 @@ public class JobRunner01 {
 
         try {
             // DummyDomain 리스트 가져오기
-            List<DummyDomain> domains = domainService.getActiveDummyDomains();
+            List<DummyDomain> domains = dummyDomainService.getActiveDummyDomains();
             if (domains == null || domains.isEmpty()) {
                 return;
             }

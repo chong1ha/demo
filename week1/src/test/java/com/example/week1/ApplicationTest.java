@@ -1,6 +1,6 @@
 package com.example.week1;
 
-import com.example.week1.test01.workflow.JobRunner01;
+import com.example.week1.test01.workflow.JobScheduler01;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ class ApplicationTest {
      * 실제 구현체를 모의객체로 대체
      */
     @MockBean
-    private JobRunner01 jobRunner01;
+    private JobScheduler01 jobRunner01;
 
     @Test
     @DisplayName("ApplicationContext 로드되는지")

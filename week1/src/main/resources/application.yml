@@ -21,7 +21,7 @@ mybatis:
     mapper-locations: classpath:mapper/*.xml
     type-aliases-package: com.example.week1.common.database.model, com.example.week1.dummy.database.model
 
-# Scheduler
+# test01.workflow.Scheduler
 scheduler:
     fixedRate: 5000
     poolSize: 5
@@ -31,3 +31,7 @@ executor:
     maxPoolSize: 10
     queueCapacity: 50
     threadNamePrefix: ThreadPoolExecutor-
+
+# test02.workflow.Scheduler
+jobs:
+    cron-exp: "*/10 * * * * *"
