@@ -46,12 +46,8 @@ public class JobScheduler02 {
     @Autowired
     public JobScheduler02(List<AbstractTask> tasks, DummyDomainServiceImpl dummyDomainService, List<JobRunner02> jobRunners) {
 
-        // 인스턴스 생성 (작업 추가, 추후 yaml)
-        AbstractTask dummyJobA = new DummyJobA();
-        AbstractTask dummyJobB = new DummyJobB();
-
         // 초기화
-        this.tasks = List.of(dummyJobA, dummyJobB);
+        this.tasks = tasks;
         this.dummyDomainService = dummyDomainService;
     }
 

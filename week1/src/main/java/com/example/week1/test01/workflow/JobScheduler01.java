@@ -14,6 +14,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -46,11 +48,7 @@ public class JobScheduler01 {
                           DummyDomainServiceImpl dummyDomainService, List<AbstractTask> tasks,
                           @Value("${scheduler.fixedRate}") long fixedRate) {
 
-        // 인스턴스 생성 (더미 테스트용, 추후 yaml)
-        AbstractTask dummyJobA = new DummyJobA();
-        AbstractTask dummyJobB = new DummyJobB();
-
-        this.tasks = List.of(dummyJobA, dummyJobB);
+        this.tasks = tasks;
         this.dummyDomainService = dummyDomainService;
         this.taskSchedulerUtil = taskSchedulerUtil;
         this.taskExecutorUtil = taskExecutorUtil;
@@ -79,35 +77,48 @@ public class JobScheduler01 {
                 return;
             }
 
-            // 각 도메인별
+            // 도메인별로 쓰레드를 사용하여 순차적으로 작업 실행
+            ExecutorService domainExecutor = Executors.newFixedThreadPool(domains.size());
             for (DummyDomain domain : domains) {
-                // 업무별
-                for (AbstractTask task : tasks) {
-                    taskExecutorUtil.submitTask(() -> {
-                        try {
-                            // 초기화
-                            task.init();
-
-                            // 데이터 수집
-                            List<Map<String, Object>> data = task.collect(currentTime, domain);
-                            if (data != null && !data.isEmpty()) {
-                                // 수집된 데이터 저장
-                                task.save(data);
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        } finally {
-                            try {
-                                task.exit();
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
+                domainExecutor.submit(() -> processDomain(currentTime, domain));
+            }
+            domainExecutor.shutdown();
+            try {
+                if (!domainExecutor.awaitTermination(1, TimeUnit.MINUTES)) {
+                    domainExecutor.shutdownNow();
                 }
+            } catch (InterruptedException e) {
+                domainExecutor.shutdownNow();
+                Thread.currentThread().interrupt();
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * 도메인별로 작업을 순차적으로 실행
+     *
+     * @param domain       처리할 도메인
+     * @param currentTime  현재 시간
+     */
+    private void processDomain(long currentTime, DummyDomain domain) {
+        for (AbstractTask task : tasks) {
+            try {
+                task.init();
+                List<Map<String, Object>> data = task.collect(currentTime, domain);
+                if (data != null && !data.isEmpty()) {
+                    task.save(data);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    task.exit();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 }

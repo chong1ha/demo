@@ -14,13 +14,24 @@
     <!-- SQL query to select all-->
     <select id="selectAll" resultMap="DummyDomainResultMap">
         select
-        dummy_id
-        , dummy_name
-        , dummy_desc
-        , dummy_service_yn
-        , created_at
-        , updated_at
+            dummy_id
+            , dummy_name
+            , dummy_desc
+            , dummy_service_yn
+            , created_at
+            , updated_at
         from
-        public.dummy_domain
+            public.dummy_domain
+    </select>
+
+    <!-- Lazy Loading Test-->
+    <select id="selectDummyMap" resultType="map">
+        select
+            dummy_name AS key
+            , dummy_id AS value
+        from
+            public.dummy_domain
+        where
+            dummy_service_yn = #{serviceYn}
     </select>
 </mapper>

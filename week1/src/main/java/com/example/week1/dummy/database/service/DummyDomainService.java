@@ -1,8 +1,10 @@
 package com.example.week1.dummy.database.service;
 
+import com.example.core.common.exception.ServiceException;
 import com.example.week1.dummy.database.model.DummyDomain;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * DummyDomain에 대한 Service 인터페이스
@@ -28,4 +30,7 @@ public interface DummyDomainService {
      * @return 활성화된 List<DummyDomain>
      */
     List<DummyDomain> getActiveDummyDomains() throws Exception;
+
+
+    Map<String, String> getDummyMap(Character serviceYn) throws Exception;
 }
