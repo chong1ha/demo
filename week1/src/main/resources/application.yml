@@ -23,7 +23,7 @@ mybatis:
 
 # test01.workflow.Scheduler
 scheduler:
-    fixedRate: 5000
+    fixedRate: 10000
     poolSize: 5
     threadNamePrefix: ScheduledTask-
 executor:

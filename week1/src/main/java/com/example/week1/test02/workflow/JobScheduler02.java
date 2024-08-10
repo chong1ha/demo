@@ -1,15 +1,12 @@
 package com.example.week1.test02.workflow;
 
-import com.example.week1.common.job.AbstractTask;
-import com.example.week1.dummy.database.job.DummyJobA;
-import com.example.week1.dummy.database.job.DummyJobB;
+import com.example.week1.common.task.AbstractTask;
 import com.example.week1.dummy.database.model.DummyDomain;
 import com.example.week1.dummy.database.service.DummyDomainServiceImpl;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;

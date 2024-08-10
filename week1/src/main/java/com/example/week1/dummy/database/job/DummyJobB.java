@@ -1,7 +1,7 @@
 package com.example.week1.dummy.database.job;
 
 import com.example.core.common.util.CommonUtil;
-import com.example.week1.common.job.AbstractTask;
+import com.example.week1.common.task.AbstractTask;
 import com.example.week1.dummy.database.model.DummyDomain;
 import com.example.week1.dummy.database.service.DummyDomainService;
 import org.springframework.stereotype.Component;

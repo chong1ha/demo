@@ -1,8 +1,6 @@
 package com.example.week1.test01.workflow;
 
-import com.example.week1.common.job.AbstractTask;
-import com.example.week1.dummy.database.job.DummyJobA;
-import com.example.week1.dummy.database.job.DummyJobB;
+import com.example.week1.common.task.AbstractTask;
 import com.example.week1.dummy.database.model.DummyDomain;
 import com.example.week1.dummy.database.service.DummyDomainServiceImpl;
 import com.example.week1.test01.workflow.util.TaskExecutorUtil;
@@ -70,6 +68,7 @@ public class JobScheduler01 {
 
         long currentTime = System.currentTimeMillis();
 
+        ExecutorService domainExecutor = null;
         try {
             // DummyDomain 리스트 가져오기
             List<DummyDomain> domains = dummyDomainService.getActiveDummyDomains();
@@ -78,21 +77,25 @@ public class JobScheduler01 {
             }
 
             // 도메인별로 쓰레드를 사용하여 순차적으로 작업 실행
-            ExecutorService domainExecutor = Executors.newFixedThreadPool(domains.size());
+            domainExecutor = Executors.newFixedThreadPool(domains.size());
             for (DummyDomain domain : domains) {
                 domainExecutor.submit(() -> processDomain(currentTime, domain));
             }
-            domainExecutor.shutdown();
-            try {
-                if (!domainExecutor.awaitTermination(1, TimeUnit.MINUTES)) {
-                    domainExecutor.shutdownNow();
-                }
-            } catch (InterruptedException e) {
-                domainExecutor.shutdownNow();
-                Thread.currentThread().interrupt();
-            }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            if (domainExecutor != null) {
+                domainExecutor.shutdown();
+
+                try {
+                    if (!domainExecutor.awaitTermination(1, TimeUnit.MINUTES)) {
+                        domainExecutor.shutdownNow();
+                    }
+                } catch (InterruptedException e) {
+                    domainExecutor.shutdownNow();
+                    Thread.currentThread().interrupt();
+                }
+            }
         }
     }
 
@@ -103,10 +106,17 @@ public class JobScheduler01 {
      * @param currentTime  현재 시간
      */
     private void processDomain(long currentTime, DummyDomain domain) {
+
         for (AbstractTask task : tasks) {
+
             try {
+                // 초기화
                 task.init();
+
+                // 데이터 수집
                 List<Map<String, Object>> data = task.collect(currentTime, domain);
+
+                // 데이터 저장
                 if (data != null && !data.isEmpty()) {
                     task.save(data);
                 }

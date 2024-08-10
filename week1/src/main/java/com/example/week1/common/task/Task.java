@@ -1,4 +1,4 @@
-package com.example.week1.common.job;
+package com.example.week1.common.task;
 
 import com.example.week1.dummy.database.model.DummyDomain;
 
