@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO" monitorInterval="300">
+
+    <!--  공통 속성 설정  -->
+    <Properties>
+        <Property name="LOG_LOC">week2/logs/dev/</Property>
+        <Property name="MAX">10</Property>
+        <Property name="LOG_NAME">week2</Property>
+        <Property name="LOG_PATTERN">%d{yyyy.MM.dd HH:mm:ss.SSS} [%t] [%level] %c{1.} - %msg%n</Property>
+    </Properties>
+
+    <!-- Log Appender 설정   -->
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+                <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+        </Console>
+
+        <!--  RollingFileAppender  -->
+        <RollingFile name="DebugAppender"
+                     fileName="${LOG_LOC}/${LOG_NAME}-debug.log" filePattern="${LOG_LOC}/${LOG_NAME}-debug_%d{yyyy-MM-dd}_%i.log">
+            <PatternLayout pattern="${LOG_PATTERN}" />
+            <LevelRangeFilter minLevel="DEBUG" maxLevel = "DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10MB"/>
+                <TimeBasedTriggeringPolicy interval="1"/>
+            </Policies>
+        </RollingFile>
+
+        <RollingFile name="InfoAppender"
+                     fileName="${LOG_LOC}/${LOG_NAME}-info.log" filePattern="${LOG_LOC}/${LOG_NAME}-info_%d{yyyy-MM-dd}_%i.log">
+            <PatternLayout pattern="${LOG_PATTERN} %throwable{full}" />
+            <LevelRangeFilter minLevel="INFO" maxLevel = "INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10MB"/>
+                <TimeBasedTriggeringPolicy interval="1"/>
+            </Policies>
+        </RollingFile>
+
+        <RollingFile name="FatalAppender"
+                     fileName="${LOG_LOC}/${LOG_NAME}-fatal.log" filePattern="${LOG_LOC}/${LOG_NAME}-fatal_%d{yyyy-MM-dd}_%i.log">
+            <PatternLayout pattern="${LOG_PATTERN} %throwable{full}" />
+            <LevelRangeFilter minLevel="FATAL" maxLevel = "FATAL" onMatch="ACCEPT" onMismatch="DENY"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10MB"/>
+                <TimeBasedTriggeringPolicy interval="1"/>
+            </Policies>
+        </RollingFile>
+
+        <RollingFile name="WarnAppender"
+                     fileName="${LOG_LOC}/${LOG_NAME}-warn.log" filePattern="${LOG_LOC}/${LOG_NAME}-warn_%d{yyyy-MM-dd}_%i.log">
+            <PatternLayout pattern="${LOG_PATTERN} %throwable{full}" />
+            <LevelRangeFilter minLevel="WARN" maxLevel = "WARN" onMatch="ACCEPT" onMismatch="DENY"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10MB"/>
+                <TimeBasedTriggeringPolicy interval="1"/>
+            </Policies>
+        </RollingFile>
+
+        <RollingFile name="ErrorAppender"
+                     fileName="${LOG_LOC}/${LOG_NAME}-error.log" filePattern="${LOG_LOC}/${LOG_NAME}-error_%d{yyyy-MM-dd}_%i.log">
+            <PatternLayout pattern="${LOG_PATTERN}" />
+            <LevelRangeFilter minLevel="ERROR" maxLevel = "ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10MB"/>
+                <TimeBasedTriggeringPolicy interval="1"/>
+            </Policies>
+        </RollingFile>
+
+        <RollingFile name="AllAppender"
+                     fileName="${LOG_LOC}/${LOG_NAME}-all.log" filePattern="${LOG_LOC}/${LOG_NAME}-all_%d{yyyy-MM-dd}_%i.log">
+            <PatternLayout pattern="${LOG_PATTERN}" />
+            <LevelRangeFilter minLevel="FATAL" maxLevel = "DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10MB"/>
+                <TimeBasedTriggeringPolicy />
+            </Policies>
+            <DefaultRolloverStrategy>
+                <Delete basePath="logs" maxDepth="3">
+                    <IfLastModified age = "60d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+        <!--    Application Logger    -->
+
+
+        <!--   FATAL > ERROR > WARN > INFO > DEBUG > TRACE   -->
+
+        <!--   HikariCP 로그레벨     -->
+        <logger name="com.zaxxer.hikari" level="DEBUG"/>
+
+        <!--   ROOT logger     -->      
+        <Root level="DEBUG">
+        	<AppenderRef ref="console" />
+            <AppenderRef ref="AllAppender"/>
+            <AppenderRef ref="DebugAppender"/>
+        </Root>
+    </Loggers>
+</Configuration>

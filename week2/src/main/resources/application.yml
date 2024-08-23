@@ -7,6 +7,8 @@ server:
 
 # PostgreSQL Configuration
 spring:
+    profiles:
+        active: dev
     datasource:
         driver-class-name: ${DB_DRIVER:org.postgresql.Driver}
         url: ${DB_URL:jdbc:postgresql://localhost:5432/demo}
@@ -17,4 +19,8 @@ spring:
 mybatis:
     mapper-locations: classpath:mapper/*.xml
     type-aliases-package: com.example.week2
+
+# Logging
+logging:
+    config: classpath:log4j2-${spring.profiles.active}.xml
 
