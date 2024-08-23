@@ -7,7 +7,7 @@ on:
         - cron: '*/20 * * * * *'
 
 jobs:
-  # -- step 1 --
+  # -- step 1 --00ljh
   step-01:
     runs:
         # -- 멀티쓰레드로 동작 --
