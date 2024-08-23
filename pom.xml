@@ -30,7 +30,8 @@
 		<module>core</module>
 		<module>week1</module>
 		<module>week2</module>
-	</modules>
+        <module>week3</module>
+    </modules>
 
 	<scm>
 		<connection/>

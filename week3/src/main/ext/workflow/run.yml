@@ -1,0 +1,25 @@
+# -- runner --
+on:
+  scheduler:
+    - name: runner
+      class: com.example.week3.dummy.JobRunner
+      config:
+        - cron: '*/20 * * * * *'
+
+jobs:
+  # -- step 1 --
+  step-01:
+    runs:
+        # -- 멀티쓰레드로 동작 --
+        - name: dummyJobA
+          class: com.example.week3.dummy.DummyJobA
+
+  # -- step 2 --
+  step-02:
+    needs: step-01
+    runs:
+      - name: dummyJobB
+        class: com.example.week3.dummy.DummyJobB
+
+      - name: dummyJobC
+        class: com.example.week3.dummy.DummyJobC
