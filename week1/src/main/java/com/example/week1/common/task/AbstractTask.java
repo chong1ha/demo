@@ -29,7 +29,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @since 2024-08-02 오후 1:03
  */
 @RequiredArgsConstructor
-public class AbstractTask implements Task {
+public abstract class AbstractTask implements Task {
 
     private final DummyDomainService dummyDomainService;
 
@@ -48,31 +48,6 @@ public class AbstractTask implements Task {
      */
     @Override
     public void exit() throws Exception {}
-
-    /**
-     * 데이터 수집
-     *
-     * @param domain DummyDomain
-     * @param time 수집 시간
-     * @throws Exception 수집시 발생한 예외
-     * @return 수집된 데이터 리스트
-     */
-    @Override
-    public List<Map<String, Object>> collect(long time, DummyDomain domain) throws Exception {
-        System.out.println("Thread ID: " + Thread.currentThread().getId() +" Collecting data in task: " + this.getClass().getSimpleName() + " at time: " + time);
-        return List.of();
-    }
-
-    /**
-     * 수집된 데이터 저장
-     *
-     * @param data 저장할 데이터 리스트
-     * @throws Exception 저장시 발생한 예외
-     */
-    @Override
-    public void save(List<Map<String, Object>> data) throws Exception {
-        System.out.println("Thread ID: " + Thread.currentThread().getId() +" Saving data in task: " + this.getClass().getSimpleName());
-    }
 
     /**
      * dummyName에 해당하는 dummyId 반환 <br>
