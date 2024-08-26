@@ -42,16 +42,39 @@ public class ymlRunner implements ApplicationRunner {
         File yamlFile = new File(fileName);
         String yamlStr = Files.readString(yamlFile.toPath());
 
-        Map<String, Object> yaml = new Yaml().load(yamlStr);
-        System.out.println(yaml);
+        Map<String, Object> yamlData = new Yaml().load(yamlStr);
+        System.out.println("YAML Data: " + yamlData);
 
         // 최상위 키 출력
-        Set<String> keys = yaml.keySet();
-        System.out.println(keys);
+        Set<String> keys = yamlData.keySet();
+        System.out.println("Top-Level Keys: " + keys);
 
-        for (String k : keys) {
-            List<Map<String, Object>> compInfos = (List<Map<String, Object>>)yaml.get(k);
-            System.out.println(compInfos);
+        for (Object key : keys) {
+            System.out.println("Key: " + key);
+            System.out.println("Type of key: " + key.getClass().getName());
+
+            if (key instanceof String) {
+
+                Object value = yamlData.get(key);
+
+                if (value instanceof Map) {
+                    Map<String, Object> nestedMap = (Map<String, Object>) value;
+                    for (Map.Entry<String, Object> entry : nestedMap.entrySet()) {
+                        System.out.println("Nested Key: " + entry.getKey() + ", Nested Value: " + entry.getValue());
+                    }
+                } else if (value instanceof List) {
+                    List<?> list = (List<?>) value;
+                    System.out.println("List under key " + key + ": " + list);
+                }
+
+            } else {
+                // java.lang.Boolean
+                System.out.println(key.getClass().getName());
+
+                if (key instanceof Boolean) {
+
+                }
+            }
         }
     }
 }
