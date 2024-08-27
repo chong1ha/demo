@@ -1,8 +1,11 @@
 package com.example.week3;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.context.ApplicationContext;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.yaml.snakeyaml.Yaml;
@@ -12,9 +15,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author gunha
@@ -23,6 +24,12 @@ import java.util.Set;
  */
 @Component
 public class ymlRunner implements ApplicationRunner {
+
+    private final ApplicationContext context;
+
+    public ymlRunner(ApplicationContext context) {
+        this.context = context;
+    }
 
     @Autowired
     private Environment env;
@@ -37,44 +44,137 @@ public class ymlRunner implements ApplicationRunner {
         }
     }
 
-    private void load(String fileName) throws IOException {
+    private void load(String fileName) throws Exception {
 
+        ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
+
+        // load
         File yamlFile = new File(fileName);
-        String yamlStr = Files.readString(yamlFile.toPath());
+        Map<String, Object> yamlMap = mapper.readValue(yamlFile, Map.class);
 
-        Map<String, Object> yamlData = new Yaml().load(yamlStr);
-        System.out.println("YAML Data: " + yamlData);
+        // 분리 (jobs 와 runners)
+        Map<String, Object> runner = null;
+        if (yamlMap.containsKey("on")) {
 
-        // 최상위 키 출력
-        Set<String> keys = yamlData.keySet();
-        System.out.println("Top-Level Keys: " + keys);
+            Object value = yamlMap.get("on");
 
-        for (Object key : keys) {
-            System.out.println("Key: " + key);
-            System.out.println("Type of key: " + key.getClass().getName());
-
-            if (key instanceof String) {
-
-                Object value = yamlData.get(key);
-
-                if (value instanceof Map) {
-                    Map<String, Object> nestedMap = (Map<String, Object>) value;
-                    for (Map.Entry<String, Object> entry : nestedMap.entrySet()) {
-                        System.out.println("Nested Key: " + entry.getKey() + ", Nested Value: " + entry.getValue());
-                    }
-                } else if (value instanceof List) {
-                    List<?> list = (List<?>) value;
-                    System.out.println("List under key " + key + ": " + list);
-                }
-
+            if (value instanceof Map) {
+                runner = (Map<String, Object>) value;
+                yamlMap.remove("on");
             } else {
-                // java.lang.Boolean
-                System.out.println(key.getClass().getName());
+                throw new Exception("'on' key is present but is not a Map");
+            }
+        } else {
+            throw new Exception("'on' data is not present in the YAML file");
+        }
 
-                if (key instanceof Boolean) {
+        // 최상위 키 출력 (runner(="on") 제외한 cronJobs 목록)
+        Set<String> keys = yamlMap.keySet();
+        for (String key : keys) {
 
+            // LinkedHashMap
+            @SuppressWarnings("unchecked")
+            Map<String, Object> jobsMap = (Map<String, Object>) yamlMap.get(key);
+
+            if (jobsMap == null) {
+                continue;
+            }
+
+            // Jobs
+            Jobs jobs = new Jobs();
+            jobs.setSteps(convertJobsMap(jobsMap));
+
+            // Jobs 객체 출력
+            System.out.println("Jobs: " + jobs);
+            System.out.println(jobs);
+        }
+
+        //
+
+    }
+
+    /**
+     * jobsMap 순회하여 각 항목을 JobStep 객체로 변환하여 새로운 Map에 저장
+     *
+     * @param jobsMap (root)
+     */
+    private static Map<String, JobStep> convertJobsMap(Map<String, Object> jobsMap) {
+
+        // result Map
+        Map<String, JobStep> steps = new HashMap<>();
+
+        // jobsMap 엔트리
+        for (Map.Entry<String, Object> entry : jobsMap.entrySet()) {
+
+            // step-01, step-02
+            String stepKey = entry.getKey();
+            Object value = entry.getValue();
+
+            if (value instanceof Map) {
+
+                @SuppressWarnings("unchecked")
+                Map<String, Object> stepMap = (Map<String, Object>) value;
+
+                JobStep jobStep = new JobStep();
+
+                if (stepMap.containsKey("runs")) {
+
+                    // runs 요소 처리
+                    @SuppressWarnings("unchecked")
+                    List<Map<String, String>> runsList = (List<Map<String, String>>) stepMap.get("runs");
+                    List<Job> jobsList = new ArrayList<>();
+                    for (Map<String, String> jobMap : runsList) {
+                        Job job = new Job();
+                        job.setName(jobMap.get("name"));
+                        job.setClassName(jobMap.get("class"));
+                        jobsList.add(job);
+                    }
+
+                    jobStep.setRuns(jobsList);
                 }
+
+                // needs 요소 처리
+                if (stepMap.containsKey("needs")) {
+                    jobStep.setNeeds((String) stepMap.get("needs"));
+                }
+
+                steps.put(stepKey, jobStep);
             }
         }
+
+        return steps;
+    }
+
+
+
+
+
+
+
+    private Map<String, Object> makeRunners(List<Map<String, Object>> compInfo) throws Exception {
+
+        Map<String, Object> tasks = new HashMap<>();
+
+        if (compInfo == null) {
+            return tasks;
+        }
+
+        for (Map<String, Object> componentInfo : compInfo) {
+            String className = (String) componentInfo.get("class");
+            String taskName = (String) componentInfo.get("name");
+
+            if (className == null || taskName == null) {
+                throw new Exception("class or name is not set");
+            }
+
+            Object task = (Object) context.getBean(className);
+            if (task == null) {
+                throw new Exception("Bean with class name " + className + " is not found");
+            }
+
+            tasks.put(taskName, task);
+        }
+
+        return tasks;
     }
 }
